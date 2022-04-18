@@ -76,3 +76,6 @@
         - LoadBalancer
     - ClusterIP
         - Será responsável pela comunicação entre os pods dentro de um mesmo cluster.
+        - Irá identificar os pods a ser servidos apartir das labels declaradas em cada pods, sendo referenciado no Service.
+        - Onde irá mapear as portas dos pods nas portas do Service.
+        - Exemplo com os arquivos *pod-1.yaml*, *pod-2.yaml* e *svc-pod-2.yaml*.
