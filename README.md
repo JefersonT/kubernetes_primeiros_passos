@@ -65,3 +65,14 @@
         ```
         $ kubectl delete -f .\caminho\do\arquivo.yaml
         ```
+- SVC (Services):
+    - São responsáveis por prover abstrações para expor aplicações executando em um ou mais pods.
+    - Proveem IP's fixos para comunicação
+    - Proveem um DNS para um ou mais pods
+    - São capazes de fazer balanceamento de carga.
+    - Tipos:
+        - ClusterIP
+        - NodePort
+        - LoadBalancer
+    - ClusterIP
+        - Será responsável pela comunicação entre os pods dentro de um mesmo cluster.

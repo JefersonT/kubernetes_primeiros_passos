@@ -1,0 +1,22 @@
+# Criando um Service
+apiVersion: v1
+kind: Service # Service
+metadata:
+  name: svc-pod-2
+spec:
+  type: ClusterIP # Definido o tipo de serviço
+  # o selector defini a qual pode ele irá servir
+  # refenciado a labels que foi criado no pod
+  selector:
+    app: segundo-pod # labe declarada no pod nome: valor
+  
+  # com o ports definimos em qual porta o server vai escutar
+  # e qual porta irá se comunicar com o pod
+  # ports:
+  #   - port: 80 # porta do svc e do pod
+
+  # caso a porta de entrada do server seja diferente da entrada
+  # do Pod deve especificar cada uma delas da seguinte forma
+  ports:
+    - port: 9000 # Porta do server
+      targetPort: 80 # porta do pods
