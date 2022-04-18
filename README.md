@@ -44,6 +44,11 @@
         ```
         - Onde `nginx-pod` é o nome do pode.
         - Ele iŕa abrir um arquivo com as configurções do pod, dessa forma basta edita-lo e salvar. OBS.: pode quebrar o funcionamento do pode editando dessa forma.
+    - Para finalizar o pod interativo, basta executar o seguinte comando:
+        ```
+        $ kubectl delete pod nginx-pod
+        ```
+        - Onde `nginx-pod` é o nome do pode.
 - Criando pods de forma Descritiva:
     - Esta forma se trata de crialo apartir de um arquivo .yaml ou .jason.
     - Neste projeto há um exemplo, *primeiro_pod.yaml*, com código comentando especificando as informações necessárias para execução.
@@ -52,3 +57,7 @@
         $ kubectl apply -f .\caminho\do\arquivo.yaml
         ```
     - Desta forma, caso seja necessário alterar as configurações do Pods, basta alterar a informação no arquivo e executar o comando acima novamente. Não será criado um novo, mas será reiniciado com as novas configurações.
+    - Para finalizar o pode descritivo, basta executar o comando:
+        ```
+        $ kubectl delete -f .\caminho\do\arquivo.yaml
+        ```
