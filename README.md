@@ -57,6 +57,10 @@
         $ kubectl apply -f .\caminho\do\arquivo.yaml
         ```
     - Desta forma, caso seja necessário alterar as configurações do Pods, basta alterar a informação no arquivo e executar o comando acima novamente. Não será criado um novo, mas será reiniciado com as novas configurações.
+    - Para acessar um pods de formas interativa, basta executar o comanto:
+        ```
+        kubectl exec -it nome_pods -- bash
+        ```
     - Para finalizar o pode descritivo, basta executar o comando:
         ```
         $ kubectl delete -f .\caminho\do\arquivo.yaml

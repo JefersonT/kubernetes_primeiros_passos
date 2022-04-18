@@ -1,0 +1,18 @@
+# Estrutura basica para trabalhar com Kubernetes Declarativo
+# apiVersion define qual a versão da api do Kubernets utilizar
+apiVersion: v1
+# Em seguida devemos definir que tipo de elemento deve sercriado
+kind: Pod #Pod
+
+# com metadados inserimos algumas informações sobre o elemento
+metadata:
+  name: portal-noticias # nome para o elemento
+
+# com o spec definimos o que terá neste pod
+spec:
+  # definir os containers presentes no pod
+  containers:
+    - name: portal-noticias-container # definir o nome
+      image: aluracursos/portal-noticias:1 # defini a imagem para criar o container
+# para executar basta executar o comanto
+# $ kubectl apply -f .\caminho\do\arquivo.yaml
