@@ -74,8 +74,18 @@
         - ClusterIP
         - NodePort
         - LoadBalancer
-    - ClusterIP
+    - ClusterIP:
         - Será responsável pela comunicação entre os pods dentro de um mesmo cluster.
         - Irá identificar os pods a ser servidos apartir das labels declaradas em cada pods, sendo referenciado no Service.
         - Onde irá mapear as portas dos pods nas portas do Service.
-        - Exemplo com os arquivos *pod-1.yaml*, *pod-2.yaml* e *svc-pod-2.yaml*.
+        - Exemplo com os arquivos *pod-2.yaml* e *svc-pod-2.yaml*.
+    - NodePort:
+        - Permite a comunicação de uma máquina fora do cluster com um node ou pod dentro dele.
+        - Também funciona como ClusterIP, permitindo a comunicação interna também.
+        - Para acessar um pod no ambiente linux é acessado pelo *ip_minicube:porta_configurada*.
+        - Para acessar um pod no ambiente windows é acessado pelo *localhost:porta_configurada*.
+        - Exemplo com os arquivos *pod-1.yaml* e *svc-pod-1.yaml*.
+    - LoadBalancer:
+        - É um ClusterIP que também permite a comunicação de uma máquina externa com o pods do cluster.
+        - Automaticamente se integra ao LoadBalancerdo nosso cloud provider.
+        - Exemplo de arquivo: *svc-pod-1-loadbalance.yaml*. Não aplicavel no ambiente local.

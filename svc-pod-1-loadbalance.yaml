@@ -1,0 +1,17 @@
+# Criando um Service
+apiVersion: v1
+kind: Service # Service
+metadata:
+  name: svc-pod-1-loadbalance
+spec:
+  type: LoadBalance # Definido o tipo de serviço
+  # o selector defini a qual pode ele irá servir
+  # refenciado a labels que foi criado no pod
+  selector:
+    app: primeiro-pod # labe declarada no pod nome: valor
+  
+  # com o ports definimos em qual porta o server vai escutar
+  # e qual porta irá se comunicar com o pod
+  ports:
+    - port: 80 # porta do svc e do pod
+      nodePort: 30000

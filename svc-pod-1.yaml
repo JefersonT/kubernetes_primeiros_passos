@@ -1,0 +1,23 @@
+# Criando um Service
+apiVersion: v1
+kind: Service # Service
+metadata:
+  name: svc-pod-1
+spec:
+  type: NodePort # Definido o tipo de serviço
+  # o selector defini a qual pode ele irá servir
+  # refenciado a labels que foi criado no pod
+  selector:
+    app: primeiro-pod # labe declarada no pod nome: valor
+  
+  # com o ports definimos em qual porta o server vai escutar
+  # e qual porta irá se comunicar com o pod
+  ports:
+    - port: 80 # porta do svc e do pod
+      nodePort: 30000 # porta onde irá servir o serviço podendo variar entre 30000 à 32767
+
+  # caso a porta de entrada do server seja diferente da entrada
+  # do Pod deve especificar cada uma delas da seguinte forma
+  # ports:
+  #   - port: 80 # Porta do server
+  #     targetPort: 80 # porta do pods
