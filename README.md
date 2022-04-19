@@ -59,6 +59,10 @@
         $ kubectl apply -f portal-noticias/svc-db-noticias.yaml
         $ kubectl apply -f portal-noticias/svc-pod-portal-noticias.yaml
         $ kubectl apply -f portal-noticias/svc-sistema-noticias.yaml
+
+        OU
+
+        $ kubectl apply -f portal-noticias/ --all
         ```
 - Windows:
     - Acesse ao http://localhost:30000 e http://localhost:30001
@@ -78,6 +82,11 @@
     $ kubectl delete -f portal-noticias/svc-db-noticias.yaml
     $ kubectl delete -f portal-noticias/svc-pod-portal-noticias.yaml
     $ kubectl delete -f portal-noticias/svc-sistema-noticias.yaml
+
+
+    OU
+
+    $ kubectl delete -f portal-noticias/ --all
     ```
 
 ## Anotações
