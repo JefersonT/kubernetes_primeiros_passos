@@ -89,6 +89,27 @@
         - É um ClusterIP que também permite a comunicação de uma máquina externa com o pods do cluster.
         - Automaticamente se integra ao LoadBalancerdo nosso cloud provider.
         - Exemplo de arquivo: *svc-pod-1-loadbalance.yaml* presetente na pasta **service**. Não aplicavel no ambiente local.
+- Utilizando variáveis de ambiente
+    - Uma das forma de utilizar variáveis de ambiente é declarando as variáveis diretamente o arquivo de criação do pod. Ex.:
+        ```
+        spec:
+            containers:
+                - name: db-noticias-container
+                    image: aluracursos/mysql-db:1
+                    ports:
+                        - containerPort: 3306
+                    # com o env: é possível passar variveis de ambente
+                    # para o container que esta sendo criado no pod
+                    # de forma pa passar o nome e o valor de cada variavel como mostra abaixo
+                    env:
+                        - name: "MYSQL_ROOT_PASSWORD" # Nome da varivável
+                            value: "mudar@123" # Valor da variável
+                        - name: "MYSQL_DATABASE"
+                            value: "empresa"
+                        - name: "MYSQL_PASSWORD"
+                            value: "mudar@123"
+        ```
+    - A outra forma mais coveniênte e organizada é criando um ConfigMap, é uma estrutura que ficará responsável específicamente por manter variáveis de ambiente, a qual deve ser referencaiada na criação do container. E deve ser criada assim como os Services e PODs. Exemplos na pasta **portal-noticias/** com os arquivos *...-configmap.yaml* e os arquivos *...-noticias.yaml*.
 - Comandos Extras:
     - Finalizar todos os pods:
         ```

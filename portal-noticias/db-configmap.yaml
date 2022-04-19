@@ -1,0 +1,13 @@
+# Aqui será criado o ConfigMap
+# Responsável por subistituir o compo env: dentro dos arquivos de criação dos pods.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-configmap
+
+# o data permite a declaração das variáveis de ambiente
+# seguindo a estrutura de mapeamento VARIAVEL:VALOR
+data:
+  MYSQL_ROOT_PASSWORD: mudar@123
+  MYSQL_DATABASE: empresa
+  MYSQL_PASSWORD: mudar@123

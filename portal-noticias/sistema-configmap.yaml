@@ -1,0 +1,14 @@
+# Aqui será criado o ConfigMap
+# Responsável por subistituir o compo env: dentro dos arquivos de criação dos pods.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sistema-configmap
+
+# o data permite a declaração das variáveis de ambiente
+# seguindo a estrutura de mapeamento VARIAVEL:VALOR
+data:
+  HOST_DB: svc-db-noticias
+  USER_DB: root
+  PASS_DB: mudar@123
+  DATABASE_DB: empresa
