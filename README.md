@@ -11,6 +11,75 @@
 ### Instalações necessárioas (Windows)
 - Docker Desktop
     - Ativar recursos do Kubernetes
+
+## Pré-configurações do Projeto
+### Windows
+- Acesse ao arquivo *portal-configmap.yaml* na pasta **portal-noticias** e faça a seguinte alteração:
+    - DE:
+        ```
+        ...
+        data:
+            IP_SISTEMA: http://192.168.59.100:30001
+        ```
+    - PARA:
+        ```
+        ...
+        data:
+            IP_SISTEMA: http://localhost:30001
+        ```
+### Linux
+- Execute o seguite comando e anote o INTERNAL-IP do minikube:
+    ```
+    kubectl get nodes -o wide
+    ```
+- Acesse ao arquivo *portal-configmap.yaml* na pasta **portal-noticias** e faça a seguinte alteração, substituindo o ip atual pelo ip do minikube anotado anteriormente, mantendo a porta 30001:
+    - DE:
+        ```
+        ...
+        data:
+            IP_SISTEMA: http://192.168.59.100:30001
+        ```
+    - PARA:
+        ```
+        ...
+        data:
+            IP_SISTEMA: http://INTERNAL-IP_MINIKUBE:30001
+        ```
+## Executando o projeto
+- Crie cada um dos elementos da pasta **portal-noticias**
+    - Entre na pasta raiz do projeto.
+    - Execute os seguintes comandos:
+        ```
+        $ kubectl apply -f portal-noticias/db-configmap.yaml
+        $ kubectl apply -f portal-noticias/portal-configmap.yaml
+        $ kubectl apply -f portal-noticias/sistema-configmap.yaml
+        $ kubectl apply -f portal-noticias/db-noticias.yaml
+        $ kubectl apply -f portal-noticias/portal-noticias.yaml
+        $ kubectl apply -f portal-noticias/sistema-noticias.yaml
+        $ kubectl apply -f portal-noticias/svc-db-noticias.yaml
+        $ kubectl apply -f portal-noticias/svc-pod-portal-noticias.yaml
+        $ kubectl apply -f portal-noticias/svc-sistema-noticias.yaml
+        ```
+- Windows:
+    - Acesse ao http://localhost:30000 e http://localhost:30001
+- Linux:
+    - Acesse ao http://INTERNAL-IP-MINIKUBE:30000 e http://INTERNAL-IP-MINIKUBE:30001
+- No link com a porta 30001 faça login com usuário e senha `admin`.
+- Cadastre uma notícia a seu gosto.
+- Acesse ao link com porta 30000, atualize e confira se a notícia cadastrada é carregada.
+- Ao finalizar os teste execute os comandos:
+    ```
+    $ kubectl delete -f portal-noticias/db-configmap.yaml
+    $ kubectl delete -f portal-noticias/portal-configmap.yaml
+    $ kubectl delete -f portal-noticias/sistema-configmap.yaml        
+    $ kubectl delete -f portal-noticias/db-noticias.yaml
+    $ kubectl delete -f portal-noticias/portal-noticias.yaml
+    $ kubectl delete -f portal-noticias/sistema-noticias.yaml
+    $ kubectl delete -f portal-noticias/svc-db-noticias.yaml
+    $ kubectl delete -f portal-noticias/svc-pod-portal-noticias.yaml
+    $ kubectl delete -f portal-noticias/svc-sistema-noticias.yaml
+    ```
+
 ## Anotações
 - O Kubernetes não é apenas um orquestrador de containers, ele também terá o papel de criar e gerenciar toda a infraestrutura do Cluster. O Kubernetes irá atuar na criação e gerenciamento das máquinas do clusters, assim como na orquestração de containers em cada máquina, além de garantir a escabilidade do cluster sendo capas de criar e configurar máquinas para suportar a demanda até mesmo destruir para não consumir recursos desnecessário. Tudo isso independênte do provedor cloud ou da ferramenta de containers.
 - PODS: 
