@@ -10,3 +10,13 @@ spec:
       image: aluracursos/mysql-db:1
       ports:
         - containerPort: 3306
+      # com o env: é possível passar variveis de ambente
+      # para o container que esta sendo criado no pod
+      # de forma pa passar o nome e o valor de cada variavel como mostra abaix
+      env:
+        - name: "MYSQL_ROOT_PASSWORD" # Nome da varivável
+          value: "mudar@123" # Valor da variável
+        - name: "MYSQL_DATABASE"
+          value: "empresa"
+        - name: "MYSQL_PASSWORD"
+          value: "mudar@123"
