@@ -7,6 +7,8 @@ kind: Pod #Pod
 # com metadados inserimos algumas informações sobre o elemento
 metadata:
   name: portal-noticias # nome para o elemento
+  labels:
+    app: portal-noticias
 
 # com o spec definimos o que terá neste pod
 spec:
@@ -14,5 +16,7 @@ spec:
   containers:
     - name: portal-noticias-container # definir o nome
       image: aluracursos/portal-noticias:1 # defini a imagem para criar o container
+      ports:
+        - containerPort: 80
 # para executar basta executar o comanto
 # $ kubectl apply -f .\caminho\do\arquivo.yaml

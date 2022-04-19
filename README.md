@@ -51,7 +51,7 @@
         - Onde `nginx-pod` é o nome do pode.
 - Criando pods de forma Descritiva:
     - Esta forma se trata de crialo apartir de um arquivo .yaml ou .jason.
-    - Neste projeto há um exemplo, *primeiro_pod.yaml*, com código comentando especificando as informações necessárias para execução.
+    - Neste projeto há um exemplo, *primeiro_pod.yaml* na pasta **pods**, com código comentando especificando as informações necessárias para execução.
     - Feito o arquivo basta executar o comando:
         ```
         $ kubectl apply -f .\caminho\do\arquivo.yaml
@@ -78,14 +78,47 @@
         - Será responsável pela comunicação entre os pods dentro de um mesmo cluster.
         - Irá identificar os pods a ser servidos apartir das labels declaradas em cada pods, sendo referenciado no Service.
         - Onde irá mapear as portas dos pods nas portas do Service.
-        - Exemplo com os arquivos *pod-2.yaml* e *svc-pod-2.yaml*.
+        - Exemplo com os arquivos *pod-2.yaml* e *svc-pod-2.yaml* presetentes na pasta **service**.
     - NodePort:
         - Permite a comunicação de uma máquina fora do cluster com um node ou pod dentro dele.
         - Também funciona como ClusterIP, permitindo a comunicação interna também.
         - Para acessar um pod no ambiente linux é acessado pelo *ip_minicube:porta_configurada*.
         - Para acessar um pod no ambiente windows é acessado pelo *localhost:porta_configurada*.
-        - Exemplo com os arquivos *pod-1.yaml* e *svc-pod-1.yaml*.
+        - Exemplo com os arquivos *pod-1.yaml* e *svc-pod-1.yaml* presetentes na pasta **service**.
     - LoadBalancer:
         - É um ClusterIP que também permite a comunicação de uma máquina externa com o pods do cluster.
         - Automaticamente se integra ao LoadBalancerdo nosso cloud provider.
-        - Exemplo de arquivo: *svc-pod-1-loadbalance.yaml*. Não aplicavel no ambiente local.
+        - Exemplo de arquivo: *svc-pod-1-loadbalance.yaml* presetente na pasta **service**. Não aplicavel no ambiente local.
+- Comandos Extras:
+    - Finalizar todos os pods:
+        ```
+        $ kubectl delete pods --all
+        ```
+    - Finalizar todos os serviços:
+        ```
+        $ kubectl delete svc --all
+        ```
+    - Listar pods:
+        ```
+        $ kubectl get pods
+        ```
+    - Listar pods com informações extras:
+        ```
+        $ kubectl get pods -o wide
+        ```
+    - Listar serviços:
+        ```
+        $ kubectl get svc
+        ```
+    - Listar serviços com mais informaçẽos:
+        ```
+        $ kubectl get svc -o wide
+        ```
+    - Listar os nodes em geral:
+        ```
+        $ kubectl get nodes
+        ```
+    - Listar nodes com informações extras:
+        ```
+        $ kubectl get nodes -o wide
+        ```
