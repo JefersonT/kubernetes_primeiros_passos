@@ -188,6 +188,9 @@
                             value: "mudar@123"
         ```
     - A outra forma mais coveniênte e organizada é criando um ConfigMap, é uma estrutura que ficará responsável específicamente por manter variáveis de ambiente, a qual deve ser referencaiada na criação do container. E deve ser criada assim como os Services e PODs. Exemplos na pasta **portal-noticias/** com os arquivos *...-configmap.yaml* e os arquivos *...-noticias.yaml*.
+- Replica Set:
+    - Pode emcapsular um ou mais pods.
+    - Ele pode gerenciar diversos pods, caso algum pod venha a finalizar, o replica set é responsável por criar um novo pod similar ao que foi finalizado.
 - Comandos Extras:
     - Finalizar todos os pods:
         ```
