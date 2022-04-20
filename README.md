@@ -191,6 +191,41 @@
 - Replica Set:
     - Pode emcapsular um ou mais pods.
     - Ele pode gerenciar diversos pods, caso algum pod venha a finalizar, o replica set é responsável por criar um novo pod similar ao que foi finalizado.
+    - Comando para listar os Replica Sets:
+        ```
+        $ kubectl get rs
+        ```
+- Deployment
+    - O deployment cria um replicaset.
+    - A estrutura do arquivo é igual, salvo que o kind é Deployment.
+    - O maior diferencial e vantagem do deployment é que ele permite o versionamento do nosso replica set. Mantendo uma lista de versões e permitindo restar o replicaset para alguma versão anterio.
+    - Comando para listar os Replica Sets:
+        ```
+        $ kubectl get deployments
+        ```
+    - O replicaset criado pelo deployments também pode ser listado com o comando `$ kubectl get rs`.
+    - Comando para listar o histórico de versões do deployment:
+        ```
+        $ kubectl rollout history deployment nome-deployment
+        ```
+    - Comando para gravar uma nova versão após realizar alguma alteração no deployment:
+        ```
+        $ kubectl apply -f arquivo-deployment.yaml --record
+        ```
+        Issor irá reconfigurar os pods e gravar a nova versão do deployment, ao executar o comando `kubectl rollout history deployment nome-deployment` podemos observar uma nova linha.
+    - Comando para alterar a descrição da ultima versão registrada:
+        ```
+        $ kubectl annotate deploy nome-deployment kubernetes.io/change-cause="Nova descriação da versão"
+
+        OU
+
+        $ kubectl annotate deployment nome-deployment kubernetes.io/change-cause="Nova descriação da versão"
+        ```
+    - Comando para retornar para uma versão específica do deployment:
+        ```
+        $ kubectl rollout undo deployment nome-deployment --to-revision=Nº-DA-VERSÃO
+        ```
+
 - Comandos Extras:
     - Finalizar todos os pods:
         ```

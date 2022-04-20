@@ -1,0 +1,27 @@
+apiVersion: apps/v1 # Na declaração da versão para o ReplicaSet deve ser a versão apps/v1
+kind: Deployment
+metadata:
+  name: deployment-nginx
+spec:
+  template: # Aqui será declarado todas as configurações do pod assim como nas declaração normal ocultando apenas o apiVersion e kind
+    # com metadados inserimos algumas informações sobre o elemento
+    metadata:
+      name: nginx-deploy # nome para o elemento
+      labels:
+        app: nginx-deploy
+
+    # com o spec definimos o que terá neste pod
+    spec:
+      # definir os containers presentes no pod
+      containers:
+        - name: nginx-deploy-container # definir o nome
+          image: nginx:latest # defini a imagem para criar o container
+          ports:
+            - containerPort: 80
+  # no mesmo nível do template definimos a quantidade de replicas deveram executar simultaneamente
+  replicas: 3
+
+  # Também é necessário fazer uma referência ao tamplate criado através das labels
+  selector:
+    matchLabels:
+      app: nginx-deploy # mesma lables declarada no template
