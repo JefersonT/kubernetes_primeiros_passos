@@ -1,12 +1,20 @@
+# Estrutura basica para trabalhar com Kubernetes Declarativo
+# apiVersion define qual a versão da api do Kubernets utilizar
 apiVersion: v1
-kind: Pod
+# Em seguida devemos definir que tipo de elemento deve sercriado
+kind: Pod #Pod
+
+# com metadados inserimos algumas informações sobre o elemento
 metadata:
-  name: pod-1
+  name: pod-1 # nome para o elemento
+  # as labels são importante para identificação do pod
+  # ela será referenciada na criação do Service
+  # podem ser declarada infinitas labes
   labels:
-    app: primeiro-pod
+    app: primeiro-pod # label: valor
 spec:
-  containers:
-    - name: container-pod-1
-      image: nginx:latest
+  containers: # definir os containers presentes no pod
+    - name: container-pod-1 # definir o nome
+      image: nginx:latest # defini a imagem para criar o container
       ports:
-        - containerPort: 80
+        - containerPort: 80 # define em qual porta do container esta servindo
