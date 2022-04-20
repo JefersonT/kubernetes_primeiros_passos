@@ -19,7 +19,7 @@ spec:
           ports:
             - containerPort: 80
   # no mesmo nível do template definimos a quantidade de replicas deveram executar simultaneamente
-  replicas: 3
+  replicas: 3 # Em caso de apenas uma réplica, não é necessário declarar (por defaut é replicas: 1)
 
   # Também é necessário fazer uma referência ao tamplate criado através das labels
   selector:

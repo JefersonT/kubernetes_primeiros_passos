@@ -1,0 +1,26 @@
+apiVersion: apps/v1 # Na declaração da versão para o ReplicaSet deve ser a versão apps/v1
+kind: Deployment
+metadata:
+  name: deployment-portal-noticias
+spec:
+  template:
+    metadata:
+      name: portal-noticias # nome para o elemento
+      labels:
+        app: portal-noticias
+
+    # com o spec definimos o que terá neste pod
+    spec:
+      # definir os containers presentes no pod
+      containers:
+        - name: portal-noticias-container # definir o nome
+          image: aluracursos/portal-noticias:1 # defini a imagem para criar o container
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: portal-configmap
+  replicas: 3
+  selector:
+    matchLabels:
+      app: portal-noticias
