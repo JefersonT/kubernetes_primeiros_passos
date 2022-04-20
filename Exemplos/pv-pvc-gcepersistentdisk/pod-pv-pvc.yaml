@@ -1,0 +1,16 @@
+# declarando um pode com volume referenciando o pvc
+apiVersion: v1
+kind: Pod
+metadata:
+    name: pod-pv
+spec:
+    containers:
+        - name: nginx-container
+            image: nginx-latest
+            volumeMounts:
+                - mountPath: /volume-dentro-do-container # local no container onde irá espelhar o volume
+                name: primeiro-pv # nome do pv declarado abaixo
+    volumes: # criando o volume reverenciando o pvc
+        - name: primeiro-pv # nome do volume
+          persistentVolumeClaim: #referenciando um persistentVolumeClain para o volume
+            claimName: pvc-1 # nome do pvc a ser usado

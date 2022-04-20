@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: pvc-1
+# a referencia ao pv a ser acessado é feito pela igualdade dos parametros,
+# portando que for declarado aqui deve ser igual ao que esta no vp em que deseja manipular.
+spec:
+    accessModes: # dever ser o mesmo modo de acesso que o pv a ser acessado
+        - ReadWriteOnde
+    resources: # especifica os recursos que o pv esta utiliizando, o valor do storage deve ser igual ao do pv
+        requests:
+            storage: 10Gi
+    storageClassName: standard # o storageClassName deve ser igual ao do pv

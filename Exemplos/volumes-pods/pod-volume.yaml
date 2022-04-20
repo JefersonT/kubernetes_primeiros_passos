@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: volume-pod
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx:latest
+      # em cada container que irá usar o volume é necessário declarar qual volume será utilizado
+      volumeMounts:
+        - mountPath: /volume-dentro-do-container # Aqui especifica onde o volume será espelhado dentro do container
+          name: primeiro-volume # aqui especifica qual volume esta sendo usado, já declarado abaixo
+    - name: jenkins-container
+      image: jenkins:latest
+      # em cada container que irá usar o volume é necessário declarar qual volume será utilizado
+      volumeMounts:
+        - mountPath: /volume-dentro-do-container # Aqui especifica onde o volume será espelhado dentro do container
+          name: primeiro-volume # aqui especifica qual volume esta sendo usado, já declarado abaixo
+  # aqui declaramos o volume, especificando seu nome e o local no host
+  volumes:
+    - name: primeiro-volume
+      hostPath:
+        path: ./volume # local do host onde será espelhado o volume
+        type: DirectoryOrCreate # (Linux) declarando o tipo de volume, neste caso se trata de um diretório no host (com DiretoryOrCreate ele irá criar o diretória automaticamente caso não encontre no minikube)
+        # type: Directory # (win e Linux) declarando o tipo de volume, neste caso se trata de um diretório no host (caso não exista ele irá dar erro)
+        # Para utilizar esse recurso no windows é necessario, nas configurações do Docker Desktop, desativar as configurações de WSL e liberar o acesso à pasta do volume
+        # No Linux, para usar o type: Directory, a pasta deve ser criada dentro do minikube.
+        # para acessar o minikube:
+          # $ minikube ssh

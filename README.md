@@ -225,6 +225,12 @@
         ```
         $ kubectl rollout undo deployment nome-deployment --to-revision=Nº-DA-VERSÃO
         ```
+- Persistência de dados
+    - Volumes
+        - Volumes possuem ciclo de vida dependentes de Pods e independentes de containers.
+        - Funcionam assim como funciona com o Docker.
+    - PersistVolume e PersistentVolumeClaim
+        - Com o PersistVolume iremos cria e manipular o o disco no nosso cloud provider. E com o PersistentVolumeClaim iremos manipular as informações acessando o PersistentVolume. Dessa foram os Pods deveram declarar o acesso ao PersistentVolumeClaim onde iram manipular os discos do cloud provider através do PersistentVolume.
 
 - Comandos Extras:
     - Finalizar todos os pods:

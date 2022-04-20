@@ -1,0 +1,13 @@
+# Este é um exemplo de pv para google cloud provider
+apiVersion: v1
+kind: PersistVolume
+metadata:
+    name: pv-1
+spec:
+    capacity:
+        storage: 10Gi # especificando a capacidade do disco
+    accessModes:
+        - ReadWriteOnce # define quandos pods poderam ler ao mesmo tempo um ou vários
+    gcePersistentDisk:
+        pdName: pv-disk # nome do disk criado do google cloud provider
+    storageClassName: standard
