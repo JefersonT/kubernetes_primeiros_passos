@@ -254,6 +254,14 @@
         - Os Storages Classes torna o trabalho do PV e PVC dinâmico. Criando um StorageClass não há a necessidade de criar um disco do cloud provider e nem o PV, ambos são criados e removidos dinamicamente. Assim só há a necessidade de criar o PVC onde serão definidos as configurações do disco a ser criado e referenciar o SC no campo `storageClassName:`. Os teste com arquivos aqui presente devem ser feito direto do seu Cloud Provider. Finalizando o SC automaticamente finaliza o PV e o disco.
     - **StatefulSet**
         - O StatefulSet funciona de forma semelhante ao Deployment, e sua criação também se assemelha como o mesmo, porém com um algumas diferenças. Uma delas é que o StatefulSet necessita declarar qual o Serviço é responsável com gerenciar seus pods, além disso, seu principal diferencial é que permite a persistễncia de dados mesmo com os pods sendo finalizado. Portanto para o funcionamento correto da percistência é necessaŕio criar um PVC com as configurações do volume, assim na criação do StatefulSet é criado o volume referenciando o PVC. Com o StatefulSet os PVs e os espaço em disco são criados automaticamente.
+- **Probes**
+    - A principal utilidade dos Probes é tornar visível ao Kubernetes que uma aplicação não está se comportando da maneira esperada.
+    - **Liveness Probes**
+        - O Liveness Probes é como uma sonda que detecta e trata quando o serviço dentro de um container para de funcionar de forma correta. Com ele definimos o intervalo de tempo entre cada verificação do statos do serviço, qual end-point será verificado, quantas falhas serão toleradas antes do reinício do serviço e quando o monitoramento vai iniciar após o start do container. Ele verifica a saúde do serviço pelo código html, sendo que se for maior que 200 e menor que 400 indicar sucesso caso contrário fálha.
+    - **Readiness Probes**
+        - O Readiness probes permite garantir que o pod esteja pronto para receber requisições, enquanto não estiver ele não permite entrada de requisições para o pod. Assim como no Liveness, com o Readiness configuramos um tempo para iniciar as verificações, o interválo de tempo entre as verificações, qual end-point será verificado e quantas falhas serão toleradas antes de permitir que o pod receber as requisições.
+    - **Startup Probes**
+        - Há um terceiro tipo de probe voltado para aplicações legadas, o Startup Probe. Algumas aplicações legadas exigem tempo adicional para inicializar na primeira vez. Nem sempre Liveness ou Readiness Probes vão conseguir resolver de maneira simples os problemas de inicialização de aplicações legadas. 
 
 - **Comandos Extras**:
     - Finalizar todos os pods:

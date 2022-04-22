@@ -1,7 +1,7 @@
 apiVersion: apps/v1 # Na declaração da versão para o StatefulSet deve ser a versão apps/v1
 kind: StatefulSet
 metadata:
-  name: deployment-portal-noticias
+  name: statefulset-portal-noticias
 spec:
   template:
     metadata:
@@ -20,6 +20,23 @@ spec:
           envFrom:
             - configMapRef:
                 name: portal-configmap
+          # Declarando o Liveness Probe
+          livenessProbe:
+            httpGet: # Tipo de requisição a ser feita para o serviço
+              path: / # End-Pont de teste da url
+              port: 80 # Porta de teste
+            periodSeconds: 10 # Intervalo de tempo entre cada verificação
+            failureThreshold: 3 # Quantidade de falhas aceitas antes de reiniciar o container
+            initialDelaySeconds: 20 # Quantidade de tempo esperar apos o start do container para iniciar os testes
+          
+          # Declarando o Readiness Probe
+          readinessProbe:
+            httpGet: # Tipo de requisição a ser feita para o serviço
+              path: / # End-Pont de teste da url
+              port: 80 # Porta de teste
+            periodSeconds: 10 # Intervalo de tempo entre cada verificação
+            failureThreshold: 5 # Quantidade de falhas aceitas antes de permitir a entrada de requisições
+            initialDelaySeconds: 3 # Quantidade de tempo esperar apos o start do container para iniciar os testes
   replicas: 3
   selector:
     matchLabels:
