@@ -60,7 +60,13 @@
 ## Executando o projeto
 - Crie cada um dos elementos da pasta **portal-noticias**
     - Entre na pasta raiz do projeto.
-    - Execute os seguintes comandos para o iniciar projeto com Deployments:
+    - Execute os seguintes comandos para o iniciar projeto com StatefulSets:
+        ```
+        $ kubectl apply -f portal-noticias/Services/ --all
+        $ kubectl apply -f portal-noticias/StatefulSets/ --all
+        $ kubectl apply -f portal-noticias/Configmaps/ --all
+        ```
+    - **OU** execute os seguintes comandos para iniciar o projeto com Deployments:
         ```
         $ kubectl apply -f portal-noticias/Services/ --all
         $ kubectl apply -f portal-noticias/Deployments/ --all
@@ -79,7 +85,13 @@
 - No link com a porta 30001 faça login com usuário e senha `admin`.
 - Cadastre uma notícia a seu gosto.
 - Acesse ao link com porta 30000, atualize e confira se a notícia cadastrada é carregada.
-- Ao finalizar os teste com Deployments execute os comandos:
+- Ao finalizar os teste com StatesfulSets execute os comandos:
+    ```
+    $ kubectl delete -f portal-noticias/Services/ --all
+    $ kubectl delete -f portal-noticias/StatesfulSets/ --all
+    $ kubectl delete -f portal-noticias/Configmaps/ --all
+    ```
+- **OU** execute os comandos abaixo caso o projeto tenha sido iniciado com Deployments:
     ```
     $ kubectl delete -f portal-noticias/Services/ --all
     $ kubectl delete -f portal-noticias/Deployments/ --all
@@ -240,6 +252,8 @@
         - Com o PersistVolume iremos cria e manipular o o disco no nosso cloud provider. E com o PersistentVolumeClaim iremos manipular as informações acessando o PersistentVolume. Dessa foram os Pods deveram declarar o acesso ao PersistentVolumeClaim onde iram manipular os discos do cloud provider através do PersistentVolume.
     - **StorageClass(SC)**
         - Os Storages Classes torna o trabalho do PV e PVC dinâmico. Criando um StorageClass não há a necessidade de criar um disco do cloud provider e nem o PV, ambos são criados e removidos dinamicamente. Assim só há a necessidade de criar o PVC onde serão definidos as configurações do disco a ser criado e referenciar o SC no campo `storageClassName:`. Os teste com arquivos aqui presente devem ser feito direto do seu Cloud Provider. Finalizando o SC automaticamente finaliza o PV e o disco.
+    - **StatefulSet**
+        - O StatefulSet funciona de forma semelhante ao Deployment, e sua criação também se assemelha como o mesmo, porém com um algumas diferenças. Uma delas é que o StatefulSet necessita declarar qual o Serviço é responsável com gerenciar seus pods, além disso, seu principal diferencial é que permite a persistễncia de dados mesmo com os pods sendo finalizado. Portanto para o funcionamento correto da percistência é necessaŕio criar um PVC com as configurações do volume, assim na criação do StatefulSet é criado o volume referenciando o PVC. Com o StatefulSet os PVs e os espaço em disco são criados automaticamente.
 
 - **Comandos Extras**:
     - Finalizar todos os pods:

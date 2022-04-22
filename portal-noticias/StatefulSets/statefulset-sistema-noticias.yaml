@@ -1,0 +1,40 @@
+apiVersion: apps/v1 # Na declaração da versão para o StatefulSet deve ser a versão apps/v1
+kind: StatefulSet
+metadata:
+  name: statefullset-sistema-noticias
+spec:
+  template:
+    metadata:
+      name: sistema-noticias
+      labels:
+        app: sistema-noticias
+    spec:
+      containers:
+        - name: sistema-noticias-container
+          image: aluracursos/sistema-noticias:1
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: sistema-configmap
+          # Para funcionamento da persistência do dadso com o statefulset é necessário referenciasr
+          # a pasta de montagem dentro do container e qual o nome do volume será usado
+          # o qual deve ser o volume referenciado ao PVC
+          volumeMounts:
+            - mountPath: /var/www/html/uploads # local no container onde irá persistir as imagens
+              name: imagens # nome do pvc declarado abaixo
+            - mountPath: /tmp # local no container onde irá persistir as sessões
+              name: sessao # nome do pvc declarado abaixo
+      volumes: # criando o volume reverenciando o pvc
+        - name: imagens # nome do volume
+          persistentVolumeClaim: #referenciando um persistentVolumeClain para o volume
+            claimName: pvc-imagens # nome do pvc a ser usado
+        - name: sessao # nome do volume
+          persistentVolumeClaim: #referenciando um persistentVolumeClain para o volume
+            claimName: pvc-sessao # nome do pvc a ser usado
+  selector:
+    matchLabels:
+      app: sistema-noticias
+  # Uma das diferenças da delcarção do StatefulSet para o Deployment está na necessidade de 
+  # declarar qual serviço irá gerenciar os StatefulSet
+  serviceName: svc-sistema-noticias # Declarando o serviço

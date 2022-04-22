@@ -1,4 +1,4 @@
-apiVersion: apps/v1 # Na declaração da versão para o ReplicaSet deve ser a versão apps/v1
+apiVersion: apps/v1 # Na declaração da versão para o Deployment deve ser a versão apps/v1
 kind: Deployment
 metadata:
   name: deployment-sistema-noticias

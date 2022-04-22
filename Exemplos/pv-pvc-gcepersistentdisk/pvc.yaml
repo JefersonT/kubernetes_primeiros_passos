@@ -6,7 +6,7 @@ metadata:
 # portando que for declarado aqui deve ser igual ao que esta no vp em que deseja manipular.
 spec:
     accessModes: # dever ser o mesmo modo de acesso que o pv a ser acessado
-        - ReadWriteOnde
+        - ReadWriteOnce
     resources: # especifica os recursos que o pv esta utiliizando, o valor do storage deve ser igual ao do pv
         requests:
             storage: 10Gi
