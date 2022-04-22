@@ -1,0 +1,11 @@
+# Aqui iremos fazer um exemplo com o serviços do google clound
+# Caso queira usar em outro cloud provaider basta conferir na documentação como implementar
+apiVersion: storage.k8s.io/v1 # para o sotrageclass será usado esta outra versão
+kind: StorageClass # Tipo StorageClass
+metadata:
+  name: slow # Nome que será referenciado no PVC
+provisioner: kubernetes.io/gce-pd # Esta é a epecificação do cloud provider, ira mudar para cada caso
+parameters:
+  type: pd-standard # tipo de disco a ser criado
+  fstype: ext4 # tipo de sistema de arquivo
+  replication-type: none # se o SC será replicado. O none já é o padrão, portanto não há a decessidade desta linha neste caso.

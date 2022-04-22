@@ -236,8 +236,10 @@
     - **Volumes**
         - Volumes possuem ciclo de vida dependentes de Pods e independentes de containers.
         - Funcionam assim como funciona com o Docker.
-    - **PersistVolume e PersistentVolumeClaim**
+    - **PersistVolume(PV) e PersistentVolumeClaim(PVC)**
         - Com o PersistVolume iremos cria e manipular o o disco no nosso cloud provider. E com o PersistentVolumeClaim iremos manipular as informações acessando o PersistentVolume. Dessa foram os Pods deveram declarar o acesso ao PersistentVolumeClaim onde iram manipular os discos do cloud provider através do PersistentVolume.
+    - **StorageClass(SC)**
+        - Os Storages Classes torna o trabalho do PV e PVC dinâmico. Criando um StorageClass não há a necessidade de criar um disco do cloud provider e nem o PV, ambos são criados e removidos dinamicamente. Assim só há a necessidade de criar o PVC onde serão definidos as configurações do disco a ser criado e referenciar o SC no campo `storageClassName:`. Os teste com arquivos aqui presente devem ser feito direto do seu Cloud Provider. Finalizando o SC automaticamente finaliza o PV e o disco.
 
 - **Comandos Extras**:
     - Finalizar todos os pods:

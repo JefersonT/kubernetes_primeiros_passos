@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: pvc-2
+# portando que for declarado aqui deve ser igual ao que esta no StorageClass.
+spec:
+    accessModes: # dever ser o mesmo modo de acesso que o StorageClass a ser acessado
+        - ReadWriteOnde
+    resources: # especifica os recursos que o pv esta utiliizando, o valor do storage deve ser igual ao do StorageClass
+        requests:
+            storage: 10Gi # no caso do StorageClass, este irá definir o tamanho do disco a ser criado dinamicamente
+    storageClassName: standard # o storageClassName deve ser igual ao dado no arquivo do StorageClass
