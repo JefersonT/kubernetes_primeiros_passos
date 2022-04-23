@@ -1,0 +1,23 @@
+# A definição do HorizontalPodAutoscaling é feita com a versão autoscaling/v2
+# pois a mesma já é mais utilizadas em projetos
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler #typo HPA
+metadata:
+  name: hpa-portal-noticias # nome do HPA
+spec:
+  # Declara as referencias para criar a escalabilidade
+  # Referenciando o objeto através de apiVersion, kind e name
+  scaleTargetRef:
+    apiVersion: apps/v1 # apiVersion do objeto a ser escalado
+    kind: StatefulSet # kind: tipo do objeto a ser escalado
+    name: statefulset-portal-noticias ## nome do objeto a ser escalado
+  minReplicas: 1 # defini a quantidade mínima de pods
+  maxReplicas: 10 # defini a quantidade máxima de pods a serem criado
+  # definindo a métrica para limites de recursos
+  metrics:
+    - type: Resource # tipo de métrica: Recursos
+      resource: # definindo os recursos
+        name: cpu # nome do recurso
+        target: # definindo valores a ser medido do recurso
+          type: Utilization # tipo Utilização
+          averageUtilization: 50 # média em % do recurso total limitado na criação do container

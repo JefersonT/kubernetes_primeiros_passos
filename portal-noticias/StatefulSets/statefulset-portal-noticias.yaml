@@ -37,7 +37,13 @@ spec:
             periodSeconds: 10 # Intervalo de tempo entre cada verificação
             failureThreshold: 5 # Quantidade de falhas aceitas antes de permitir a entrada de requisições
             initialDelaySeconds: 3 # Quantidade de tempo esperar apos o start do container para iniciar os testes
-  replicas: 3
+          
+          # Declarando limite de recursos que o container irá utilizar do host
+          # Importante para testar o HorizontalPodAutoscaling
+          resources: # Definir o recurso
+            requests: # define qual recurso
+              cpu: 10m # recurso CPU com no máximo 5milicore
+  # replicas: 3 # Como o controle de réplicas esta sendo feita pelo HPA, não há a necessidade de declarar as replicas aqui, mantendo assim o padrão de 1 replica.
   selector:
     matchLabels:
       app: portal-noticias

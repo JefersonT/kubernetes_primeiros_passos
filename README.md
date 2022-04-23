@@ -1,3 +1,5 @@
+# Kubernetes Primeiros Passos
+Este projeto foi desenvolvido com o objetivo de praticar os conhecimentos adquiridos nos cursos de Kubernetes da Alura.
 ## Pŕe-requisitos
 ### Instalações necessárias (Linux)
 - VirtualBox
@@ -14,7 +16,7 @@
 
 ## Pré-configurações do Projeto
 ### Windows
-- Acesse ao arquivo *portal-configmap.yaml* na pasta **portal-noticias** e faça a seguinte alteração:
+- Acesse ao arquivo *portal-configmap.yaml* na pasta **portal-noticias/Configmaps** e faça a seguinte alteração:
     - DE:
         ```
         .
@@ -33,12 +35,29 @@
         data:
             IP_SISTEMA: http://localhost:30001
         ```
+- Acesse ao arquivo *stress.sh* na pasta **portal-noticias/StatefulSets/TestesHPA** e faça a seguinte alteração:
+    - DE:
+        ```
+        #!/bin/bash
+        for i in {1..10000}; do
+            curl 192.168.59.100:30000
+            sleep $1
+        done
+        ```
+    - PARA:
+        ```
+        #!/bin/bash
+        for i in {1..10000}; do
+            curl localhost:30000
+            sleep $1
+        done
+        ```
 ### Linux
 - Execute o seguite comando e anote o INTERNAL-IP do minikube:
     ```
     kubectl get nodes -o wide
     ```
-- Acesse ao arquivo *portal-configmap.yaml* na pasta **portal-noticias** e faça a seguinte alteração, substituindo o ip atual pelo ip do minikube anotado anteriormente, mantendo a porta 30001:
+- Acesse ao arquivo *portal-configmap.yaml* na pasta **portal-noticias/Configmaps** e faça a seguinte alteração, substituindo o ip atual pelo ip do minikube anotado anteriormente, mantendo a porta 30001:
     - DE:
         ```
         .
@@ -57,7 +76,35 @@
         data:
             IP_SISTEMA: http://INTERNAL-IP_MINIKUBE:30001
         ```
+- Acesse ao arquivo *stress.sh* na pasta **portal-noticias/StatefulSets/TestesHPA** e faça a seguinte alteração:
+    - DE:
+        ```
+        #!/bin/bash
+        for i in {1..10000}; do
+            curl 192.168.59.100:30000
+            sleep $1
+        done
+        ```
+    - PARA:
+        ```
+        #!/bin/bash
+        for i in {1..10000}; do
+            curl <INTERNAL-IP_MINIKUBE>:30000
+            sleep $1
+        done
+        ```
 ## Executando o projeto
+- Configurar o servidor de métricas
+    - Windows:
+        - No diretório raiz do projeto execute o comando:
+        ```
+        $ kubectl apply -f portal-noticias/StatefulSets/TestesHPA/components.yaml
+        ```
+    - Linux:
+        - Ative o servidor de métricas dentro do minikube com o seguinte comando:
+            ```
+            $ minikube addons enable metrics-server
+            ```
 - Crie cada um dos elementos da pasta **portal-noticias**
     - Entre na pasta raiz do projeto.
     - Execute os seguintes comandos para o iniciar projeto com StatefulSets:
@@ -79,9 +126,27 @@
         $ kubectl apply -f portal-noticias/Configmaps/ --all
         ```
 - Windows:
-    - Acesse ao http://localhost:30000 e http://localhost:30001
+    - Para testar o Sistema e o Portal acesse ao http://localhost:30000 e http://localhost:30001
+    - Para tester o funcionamento do HPA execute o arqiuvo *stress.sh* através do GitBash:
+        ```
+        $ bash stress.sh
+        ```
+        - Acompanhe as mudançado do HPA através do comando:
+            ```
+            $ kubectl get hpa --watch
+            ```
+        - Para encerrar o teste pare a execução do arquivo *stress.sh* (Ctrl+C).
 - Linux:
-    - Acesse ao http://INTERNAL-IP-MINIKUBE:30000 e http://INTERNAL-IP-MINIKUBE:30001
+    - Para testar o Sistema e o Portal acesse ao http://INTERNAL-IP-MINIKUBE:30000 e http://INTERNAL-IP-MINIKUBE:30001
+    - Para tester o funcionamento do HPA execute o arquivo *stress.sh* através do Bash:
+        ```
+        $ bash stress.sh
+        ```
+        - Acompanhe as mudançado do HPA através do comando:
+            ```
+            $ kubectl get hpa --watch
+            ```
+        - Para encerrar o teste pare a execução do arquivo *stress.sh* (Ctrl+C).
 - No link com a porta 30001 faça login com usuário e senha `admin`.
 - Cadastre uma notícia a seu gosto.
 - Acesse ao link com porta 30000, atualize e confira se a notícia cadastrada é carregada.
@@ -261,7 +326,14 @@
     - **Readiness Probes**
         - O Readiness probes permite garantir que o pod esteja pronto para receber requisições, enquanto não estiver ele não permite entrada de requisições para o pod. Assim como no Liveness, com o Readiness configuramos um tempo para iniciar as verificações, o interválo de tempo entre as verificações, qual end-point será verificado e quantas falhas serão toleradas antes de permitir que o pod receber as requisições.
     - **Startup Probes**
-        - Há um terceiro tipo de probe voltado para aplicações legadas, o Startup Probe. Algumas aplicações legadas exigem tempo adicional para inicializar na primeira vez. Nem sempre Liveness ou Readiness Probes vão conseguir resolver de maneira simples os problemas de inicialização de aplicações legadas. 
+        - Há um terceiro tipo de probe voltado para aplicações legadas, o Startup Probe. Algumas aplicações legadas exigem tempo adicional para inicializar na primeira vez. Nem sempre Liveness ou Readiness Probes vão conseguir resolver de maneira simples os problemas de inicialização de aplicações legadas.
+- **Horizontal Pod Autoscaling**
+    - O HorizontalPodAutoscaling permite configurar-mos limites de usu de recursos específicos como cpu e memória, onde ao atinger este limite, automaticamente são adicionados pods para atender a demanda ou remove os pods quando não há a utilização dos recursos acima do limite estabelecido. Nele também é configurável a quantidade mínima e máxima de pods a serem mantidos para atender aos limites.
+    - Pré-requisitos:
+        - É necessário configurar o limite de recursos no container do objeto criado, para que haja um parametro de comparação para HorizontalPodAutoscaling.
+        - Deve ser configurado um servidor de métricas (apresentado no inicio da página).
+- **Vertical Pod Autoscaler**
+    - Além do HorizontalPodAutoscaler, o Kubernetes possui um recurso customizado chamado VerticalPodAutoscaler. O VerticalPodAutoscaler remove a necessidade de definir limites e pedidos por recursos do sistema, como cpu e memória. Quando definido, ele define os consumos de maneira automática baseada na utilização em cada um dos nós, além disso, quanto tem disponível ainda de recurso. Algumas configurações extras são necessárias para utilizar o VerticalPodAutoscaler.
 
 - **Comandos Extras**:
     - Finalizar todos os pods:

@@ -17,25 +17,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: sistema-configmap
-
-          # Declarando o Liveness Probe
-          livenessProbe:
-            httpGet: # Tipo de requisição a ser feita para o serviço
-              path: / # End-Pont de teste da url
-              port: 80 # Porta de teste
-            periodSeconds: 10 # Intervalo de tempo entre cada verificação
-            failureThreshold: 3 # Quantidade de falhas aceitas antes de reiniciar o container
-            initialDelaySeconds: 20 # Quantidade de tempo esperar apos o start do container para iniciar os testes
-          
-          # Declarando o Readiness Probe
-          readinessProbe:
-            httpGet: # Tipo de requisição a ser feita para o serviço
-              path: / # End-Pont de teste da url
-              port: 80 # Porta de teste
-            periodSeconds: 10 # Intervalo de tempo entre cada verificação
-            failureThreshold: 5 # Quantidade de falhas aceitas antes de permitir a entrada de requisições
-            initialDelaySeconds: 3 # Quantidade de tempo esperar apos o start do container para iniciar os testes
-            
           # Para funcionamento da persistência do dadso com o statefulset é necessário referencias
           # a pasta de montagem dentro do container e qual o nome do volume será usado
           # o qual deve ser o volume referenciado ao PVC
